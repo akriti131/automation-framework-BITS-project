@@ -22,3 +22,7 @@ class ConfigReader:
 
     def get_password(self):
         return self.config["credentials"]["password"]
+    
+    def is_headless(self):
+        return self.config.get("headless", False)
+
