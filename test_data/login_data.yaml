@@ -1,0 +1,14 @@
+valid_login:
+  username: standard_user
+  password: secret_sauce
+  expected: success
+
+locked_user:
+  username: locked_out_user
+  password: secret_sauce
+  expected: failure
+
+invalid_login:
+  username: invalid_user
+  password: wrong_pass
+  expected: failure

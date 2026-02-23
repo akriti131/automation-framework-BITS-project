@@ -1,8 +1,18 @@
 import os
 import pytest
 from datetime import datetime
+from utils.driver_factory import DriverFactory
 
 
+# ✅ DRIVER FIXTURE
+@pytest.fixture
+def driver():
+    driver = DriverFactory().get_driver()
+    yield driver
+    driver.quit()
+
+
+# ✅ SCREENSHOT ON FAILURE HOOK
 @pytest.hookimpl(hookwrapper=True)
 def pytest_runtest_makereport(item, call):
     outcome = yield

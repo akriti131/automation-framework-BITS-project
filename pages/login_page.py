@@ -19,3 +19,8 @@ class LoginPage:
         self.driver.find_element(*self.username_field).send_keys(username)
         self.driver.find_element(*self.password_field).send_keys(password)
         self.driver.find_element(*self.login_button).click()
+
+    error_message = (By.CSS_SELECTOR, "[data-test='error']")
+
+    def is_error_displayed(self):
+        return len(self.driver.find_elements(*self.error_message)) > 0
