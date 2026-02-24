@@ -4,4 +4,4 @@
 Automation of Employee Onboarding Process
 
 ## Project Info
-BITS Sem 4 Project
+BITS Sem 4 Projects
