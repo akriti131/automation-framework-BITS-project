@@ -60,9 +60,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run tests & generate report
+      - name: Run tests
         run: |
-          python -m pytest --html=reports/index.html --self-contained-html
+          python -m pytest -v -p no:xdist --html=reports/index.html --self-contained-html
 
       - name: Upload report artifact
         uses: actions/upload-artifact@v4
@@ -75,7 +75,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Download artifact
+      - name: Download report artifact
         uses: actions/download-artifact@v4
         with:
           name: test-report
