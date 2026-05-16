@@ -86,21 +86,27 @@ class DriverFactory:
         if browser == "chrome":
             options = ChromeOptions()
 
-            if headless or is_ci:
+            if headless:
                 options.add_argument("--headless=new")
-                options.add_argument("--no-sandbox")
-                options.add_argument("--disable-dev-shm-usage")
-                logger.info("Headless mode enabled")
 
-            if is_ci:
-                logger.info("CI detected → Using webdriver-manager")
-                service = ChromeService(ChromeDriverManager().install())
-            else:
+            try:
+                # Try local driver first
                 driver_path = os.path.join("drivers", "chromedriver.exe")
                 logger.info(f"Using local Chrome driver: {driver_path}")
                 service = ChromeService(driver_path)
+                driver = webdriver.Chrome(service=service, options=options)
 
-            driver = webdriver.Chrome(service=service, options=options)
+            except Exception:
+                logger.warning("Local driver mismatch, using webdriver-manager")
+
+                try:
+                    # Try webdriver manager
+                    service = ChromeService(ChromeDriverManager().install())
+                    driver = webdriver.Chrome(service=service, options=options)
+
+                except Exception:
+                    logger.error("webdriver-manager failed. Please update local driver.")
+                    raise
 
         # ================= EDGE =================
         elif browser == "edge":
