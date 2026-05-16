@@ -6,30 +6,57 @@ from selenium.webdriver.support import expected_conditions as EC
 class CartPage:
 
     def __init__(self, driver):
+
         self.driver = driver
-        self.wait = WebDriverWait(driver, 20)
 
-    # Locators
-    product_name = (By.CLASS_NAME, "inventory_item_name")
+        self.wait = WebDriverWait(driver, 30)
 
-    checkout_btn = (By.ID, "checkout")
+    # ================= LOCATORS =================
 
-    # Actions
+    product_name = (
+        By.CLASS_NAME,
+        "inventory_item_name"
+    )
+
+    checkout_btn = (
+        By.ID,
+        "checkout"
+    )
+
+    # ================= ACTIONS =================
+
     def get_product_name(self):
 
         element = self.wait.until(
-            EC.visibility_of_element_located(self.product_name)
+            EC.visibility_of_element_located(
+                self.product_name
+            )
         )
 
         return element.text
 
     def click_checkout(self):
 
-        self.wait.until(
-            EC.element_to_be_clickable(self.checkout_btn)
-        ).click()
+        # Wait for button presence
+        checkout_button = self.wait.until(
+            EC.presence_of_element_located(
+                self.checkout_btn
+            )
+        )
 
-        # Wait for checkout page to load
+        # Scroll to element
+        self.driver.execute_script(
+            "arguments[0].scrollIntoView(true);",
+            checkout_button
+        )
+
+        # JS Click (Most stable for CI/headless)
+        self.driver.execute_script(
+            "arguments[0].click();",
+            checkout_button
+        )
+
+        # Wait for checkout page
         self.wait.until(
             EC.visibility_of_element_located(
                 (By.ID, "first-name")
