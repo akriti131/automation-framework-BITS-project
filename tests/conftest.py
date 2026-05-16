@@ -29,4 +29,4 @@ def pytest_runtest_makereport(item, call):
             file_path = os.path.join(screenshots_dir, file_name)
 
             driver.save_screenshot(file_path)
-            print(f"\n📸 Screenshot captured: {file_path}")
+            print(f"\n Screenshot captured: {file_path}")
