@@ -28,3 +28,10 @@ class CartPage:
         self.wait.until(
             EC.element_to_be_clickable(self.checkout_btn)
         ).click()
+
+        # Wait for checkout page to load
+        self.wait.until(
+            EC.visibility_of_element_located(
+                (By.ID, "first-name")
+            )
+        )
