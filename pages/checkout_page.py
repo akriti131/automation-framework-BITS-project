@@ -7,7 +7,7 @@ class CheckoutPage:
 
     def __init__(self, driver):
         self.driver = driver
-        self.wait = WebDriverWait(driver, 10)
+        self.wait = WebDriverWait(driver, 20)
 
     # Locators
     first_name = (By.ID, "first-name")
@@ -35,6 +35,10 @@ class CheckoutPage:
         self.wait.until(
             EC.element_to_be_clickable(self.continue_btn)
         ).click()
+
+        self.wait.until(
+            EC.visibility_of_element_located(self.finish_btn)
+        )
 
     def click_finish(self):
 
