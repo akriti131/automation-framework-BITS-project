@@ -54,14 +54,9 @@ class CheckoutPage:
     def click_continue(self):
 
         continue_button = self.wait.until(
-            EC.presence_of_element_located(
+            EC.element_to_be_clickable(
                 self.continue_btn
             )
-        )
-
-        self.driver.execute_script(
-            "arguments[0].scrollIntoView(true);",
-            continue_button
         )
 
         self.driver.execute_script(
@@ -69,9 +64,14 @@ class CheckoutPage:
             continue_button
         )
 
-        # Wait for checkout overview page
+        # Wait for checkout overview page URL
         self.wait.until(
-            EC.visibility_of_element_located(
+            EC.url_contains("checkout-step-two")
+        )
+
+        # Wait for finish button presence
+        self.wait.until(
+            EC.presence_of_element_located(
                 self.finish_btn
             )
         )
