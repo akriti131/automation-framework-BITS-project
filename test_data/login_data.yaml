@@ -1,8 +1,8 @@
 valid_login:
   username: standard_user
-  password: wrong_password 
+  password: secret_sauce  
   expected: success
-# ""secret_sauce 
+# wrong_password
 locked_user:
   username: locked_out_user
   password: secret_sauce
